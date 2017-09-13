@@ -1,0 +1,49 @@
+1|2|3
+-----
+4|5|6
+-----
+7|8|9
+
+Player 1, enter a number between 1 and 9 to make your move.
+1
+X|2|3
+-----
+4|5|6
+-----
+7|8|9
+
+Player 2, enter a number between 1 and 9 to make your move.
+2
+X|O|3
+-----
+4|5|6
+-----
+7|8|9
+
+Player 1, enter a number between 1 and 9 to make your move.
+5
+X|O|3
+-----
+4|X|6
+-----
+7|8|9
+
+Player 2, enter a number between 1 and 9 to make your move.
+3
+X|O|O
+-----
+4|X|6
+-----
+7|8|9
+
+Player 1, enter a number between 1 and 9 to make your move.
+9
+X|O|O
+-----
+4|X|6
+-----
+7|8|X
+
+A Player won!
+
+Game is a draw
