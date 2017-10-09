@@ -5,7 +5,7 @@ use board::Board;
 fn main() {
     let board = Board::new();
 
-    println!("{}", board.print());
+    println!("{}", board);
     println!("\nPlayer 1, enter a number between 1 and 9 to make your move.");
 
     let stdin = io::stdin();
