@@ -6,9 +6,6 @@ pub struct Board {
     player: Player,
     rows: [[Option<Player>; 3]; 3]
 }
-// [[None, None, None],
-//  [None, None, None],
-//  [None, None, None]]
 
 impl Board {
     pub fn new() -> Board {
@@ -26,9 +23,21 @@ impl Board {
                 return Some(Player::X);
             }
         }
+
+        let columns = (0..3).map(|column| {
+            (0..3).map(move |row| {
+                self.rows[row][column]
+            })
+        });
+
+        for mut column in columns {
+            if column.all(|x| x == Some(Player::X)) {
+                return Some(Player::X);
+            }
+        }
+
         None
     }
-
 }
 
 impl fmt::Display for Board {
@@ -137,53 +146,39 @@ mod tests {
 
     #[test]
     fn there_is_no_winner_when_no_moves_are_made() {
-        let board = Board::new();
-        assert_eq!(board.calculate_winner(), None)
+        test_calculate_winner(vec![], None)
     }
 
     #[test]
     fn there_is_no_winner_mid_game() {
-        let mut board = Board::new();
-        board.make_move(1);
-        board.make_move(2);
-        board.make_move(3);
-        board.make_move(4);
-        board.make_move(5);
-        assert_eq!(board.calculate_winner(), None);
+        test_calculate_winner(vec![1, 2, 3, 4, 5], None)
     }
 
     #[test]
     fn player_x_wins_horizontally_1_2_3() {
-        let mut board = Board::new();
-        board.make_move(1);
-        board.make_move(5);
-        board.make_move(2);
-        board.make_move(7);
-        board.make_move(3);
-        assert_eq!(board.calculate_winner(), Some(Player::X));
+        test_calculate_winner(vec![1, 5, 2, 7, 3], Some(Player::X))
     }
 
     #[test]
     fn player_x_wins_horizontally_4_5_6() {
-        let mut board = Board::new();
-        board.make_move(4);
-        board.make_move(8);
-        board.make_move(5);
-        board.make_move(7);
-        board.make_move(6);
-        assert_eq!(board.calculate_winner(), Some(Player::X));
+        test_calculate_winner(vec![4, 8, 5, 7, 6], Some(Player::X))
     }
 
     #[test]
     fn player_x_wins_horizontally_7_8_9() {
+        test_calculate_winner(vec![7, 3, 8, 5, 9], Some(Player::X))
+    }
+
+    #[test]
+    fn player_x_wins_vertically_1_4_7() {
+        test_calculate_winner(vec![1, 2, 4, 5, 7], Some(Player::X))
+    }
+
+    fn test_calculate_winner(moves: Vec<usize>, player: Option<Player>) {
         let mut board = Board::new();
-        board.make_move(7);
-        board.make_move(3);
-        board.make_move(8);
-        board.make_move(5);
-        board.make_move(9);
-        assert_eq!(board.calculate_winner(), Some(Player::X));
+        for position in moves {
+            board.make_move(position);
+        }
+        assert_eq!(board.calculate_winner(), player);
     }
 }
-
-
